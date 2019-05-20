@@ -37,7 +37,7 @@ type alias Cell =
 
 type alias Model =
     { grid : Grid
-    , lastUpdated : Time.Posix
+    , timeLastClicked : Time.Posix
     }
 
 
@@ -97,7 +97,7 @@ view model =
 
 type Msg
     = CellClick Point
-    | TimeUpdate Time.Posix
+    | TimeLastClickedUpdate Time.Posix
     | ResetFlags Time.Posix
 
 
@@ -160,16 +160,16 @@ update msg model =
     case msg of
         CellClick ( x, y ) ->
             ( { model | grid = incrementCells model.grid ( x, y ) |> lightUpFibonacciSequences }
-            , Task.perform TimeUpdate Time.now
+            , Task.perform TimeLastClickedUpdate Time.now
             )
 
-        TimeUpdate time ->
-            ( { model | lastUpdated = time }, delay 1000 (ResetFlags time) )
+        TimeLastClickedUpdate time ->
+            ( { model | timeLastClicked = time }, delay 1000 (ResetFlags time) )
 
         ResetFlags time ->
             ( { model
                 | grid =
-                    if Time.posixToMillis model.lastUpdated == Time.posixToMillis time then
+                    if Time.posixToMillis model.timeLastClicked == Time.posixToMillis time then
                         resetFlags model.grid
 
                     else
