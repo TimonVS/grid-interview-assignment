@@ -108,23 +108,6 @@ resetFlags matrix =
         matrix
 
 
-isInfixOf : List a -> List a -> Bool
-isInfixOf seq list =
-    case ( seq, list ) of
-        ( [], [] ) ->
-            True
-
-        ( _, [] ) ->
-            False
-
-        ( _, y :: ys ) ->
-            if List.take (List.length seq) list == seq then
-                True
-
-            else
-                isInfixOf seq ys
-
-
 mapSequence : (a -> Bool -> b) -> (List a -> Bool) -> Int -> List a -> List b
 mapSequence fn sequenceConditionFn n list =
     case list of
