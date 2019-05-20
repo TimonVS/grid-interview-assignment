@@ -7,20 +7,18 @@ import Html.Attributes exposing (class, style)
 import Html.Events exposing (onClick)
 import Matrix exposing (Matrix, Point, mapCells)
 import Maybe
-import Process
 import Task
 import Time
 import Tuple
+import Utils exposing (delay, mapSequence)
 
 
 type alias Grid =
     Matrix Cell
 
 
-type alias Model =
-    { grid : Grid
-    , lastUpdated : Time.Posix
-    }
+type alias CellValue =
+    Int
 
 
 type Flag
@@ -29,29 +27,78 @@ type Flag
     | LightUpGreen
 
 
-type alias CellValue =
-    Int
-
-
 type alias Cell =
     ( CellValue, Flag )
+
+
+
+-- MODEL
+
+
+type alias Model =
+    { grid : Grid
+    , lastUpdated : Time.Posix
+    }
+
+
+init : () -> ( Model, Cmd msg )
+init _ =
+    ( Model (Matrix.createMatrix 50 50 ( -1, None )) (Time.millisToPosix 0), Cmd.none )
+
+
+
+-- VIEW
+
+
+view : Model -> Html Msg
+view model =
+    div [ class "container" ]
+        [ table []
+            (List.indexedMap
+                (\rowIndex row ->
+                    tr []
+                        (List.indexedMap
+                            (\colIndex ( cell, flag ) ->
+                                td
+                                    [ onClick (CellClick ( colIndex, rowIndex ))
+                                    , class "cell"
+                                    , class
+                                        (if flag == LightUpYellow then
+                                            "light-up-yellow"
+
+                                         else if flag == LightUpGreen then
+                                            "light-up-green"
+
+                                         else
+                                            ""
+                                        )
+                                    ]
+                                    [ text
+                                        (case cell + 1 of
+                                            0 ->
+                                                ""
+
+                                            _ ->
+                                                String.fromInt cell
+                                        )
+                                    ]
+                            )
+                            row
+                        )
+                )
+                model.grid
+            )
+        ]
+
+
+
+-- UPDATE
 
 
 type Msg
     = CellClick Point
     | TimeUpdate Time.Posix
     | ResetFlags Time.Posix
-
-
-delay : Float -> msg -> Cmd msg
-delay time msg =
-    Process.sleep time
-        |> Task.perform (\_ -> msg)
-
-
-init : () -> ( Model, Cmd msg )
-init _ =
-    ( Model (Matrix.createMatrix 50 50 ( -1, None )) (Time.millisToPosix 0), Cmd.none )
 
 
 incrementCells : Grid -> Point -> Grid
@@ -108,24 +155,6 @@ resetFlags matrix =
         matrix
 
 
-mapSequence : (a -> Bool -> b) -> (List a -> Bool) -> Int -> List a -> List b
-mapSequence fn sequenceConditionFn n list =
-    case list of
-        [] ->
-            []
-
-        x :: xs ->
-            let
-                newList =
-                    List.take n list
-            in
-            if List.length list >= n && sequenceConditionFn newList then
-                List.map (\a -> fn a True) newList ++ mapSequence fn sequenceConditionFn n (List.drop n list)
-
-            else
-                fn x False :: mapSequence fn sequenceConditionFn n (List.drop 1 list)
-
-
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
@@ -150,50 +179,17 @@ update msg model =
             )
 
 
-view : Model -> Html Msg
-view model =
-    div [ class "container" ]
-        [ table []
-            (List.indexedMap
-                (\rowIndex row ->
-                    tr []
-                        (List.indexedMap
-                            (\colIndex ( cell, flag ) ->
-                                td
-                                    [ onClick (CellClick ( colIndex, rowIndex ))
-                                    , class "cell"
-                                    , class
-                                        (if flag == LightUpYellow then
-                                            "light-up-yellow"
 
-                                         else if flag == LightUpGreen then
-                                            "light-up-green"
-
-                                         else
-                                            ""
-                                        )
-                                    ]
-                                    [ text
-                                        (case cell + 1 of
-                                            0 ->
-                                                ""
-
-                                            _ ->
-                                                String.fromInt cell
-                                        )
-                                    ]
-                            )
-                            row
-                        )
-                )
-                model.grid
-            )
-        ]
+-- SUBSCRIPTIONS
 
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.none
+
+
+
+-- MAIN
 
 
 main : Program () Model Msg
