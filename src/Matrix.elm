@@ -1,4 +1,4 @@
-module Matrix exposing (Matrix, Point, createMatrix, indexedMapRows, mapCells, mapRows)
+module Matrix exposing (Matrix, Point, createMatrix, mapCells)
 
 
 type alias Matrix a =
@@ -25,13 +25,3 @@ mapCells fn matrix =
                 row
         )
         matrix
-
-
-mapRows : (List a -> List a) -> Matrix a -> Matrix a
-mapRows fn matrix =
-    List.map fn matrix
-
-
-indexedMapRows : (Int -> List a -> List a) -> Matrix a -> Matrix a
-indexedMapRows fn matrix =
-    List.indexedMap fn matrix
