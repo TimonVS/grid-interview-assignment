@@ -38,12 +38,20 @@ fibonacciIndex x =
             0
 
         _ ->
-    round ((logBase e (toFloat x) + (logBase e 5 / 2)) / logBase e phi)
+            round ((logBase e (toFloat x) + (logBase e 5 / 2)) / logBase e phi)
 
 
 isNextFibonacci : Int -> Int -> Bool
 isNextFibonacci x y =
-    isFibonacci x && isFibonacci y && fibonacciIndex x + 1 == fibonacciIndex y
+    case ( x, y ) of
+        ( 0, 0 ) ->
+            True
+
+        ( 0, 1 ) ->
+            True
+
+        _ ->
+            isFibonacci x && isFibonacci y && fibonacciIndex x + 1 == fibonacciIndex y
 
 
 isFibonacciSequence : List Int -> Bool

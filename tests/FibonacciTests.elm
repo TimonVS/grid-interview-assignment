@@ -27,6 +27,10 @@ suite =
         , describe "isNextFibonacci"
             [ test "returns True for two consecutive fibonacci numbers 5 and 8" <|
                 \_ -> isNextFibonacci 5 8 |> Expect.equal True
+            , test "returns True for two consecutive fibonacci numbers 0 and 0" <|
+                \_ -> isNextFibonacci 0 0 |> Expect.equal True
+            , test "returns True for two consecutive fibonacci numbers 0 and 1" <|
+                \_ -> isNextFibonacci 0 1 |> Expect.equal True
             , test "returns False for two non-consecutive fibonacci numbers 5 and 6" <|
                 \_ -> isNextFibonacci 5 6 |> Expect.equal False
             ]
