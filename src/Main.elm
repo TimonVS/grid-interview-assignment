@@ -54,8 +54,8 @@ init _ =
     ( Model (Matrix.createMatrix 50 50 ( -1, None )) (Time.millisToPosix 0), Cmd.none )
 
 
-incrementCell : Grid -> Point -> Grid
-incrementCell matrix ( x, y ) =
+incrementCells : Grid -> Point -> Grid
+incrementCells matrix ( x, y ) =
     mapCells
         (\( cellValue, _ ) ( colIndex, rowIndex ) ->
             if ( colIndex, rowIndex ) == ( x, y ) && cellValue == -1 then
@@ -71,6 +71,27 @@ incrementCell matrix ( x, y ) =
                 ( cellValue, None )
         )
         matrix
+
+
+lightUpFibonacciSequences : Grid -> Grid
+lightUpFibonacciSequences grid =
+    List.map
+        (\row ->
+            mapSequence
+                (\( value, flag ) isPartOfFibSequence ->
+                    ( value
+                    , if isPartOfFibSequence then
+                        LightUpGreen
+
+                      else
+                        flag
+                    )
+                )
+                (\l -> isFibonacciSequence (List.map Tuple.first l))
+                5
+                row
+        )
+        grid
 
 
 resetFlags : Grid -> Grid
@@ -126,29 +147,7 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         CellClick ( x, y ) ->
-            ( { model
-                | grid =
-                    incrementCell model.grid ( x, y )
-                        |> (\grid ->
-                                List.map
-                                    (\row ->
-                                        mapSequence
-                                            (\( value, flag ) isPartOfFibSequence ->
-                                                ( value
-                                                , if isPartOfFibSequence then
-                                                    LightUpGreen
-
-                                                  else
-                                                    flag
-                                                )
-                                            )
-                                            (\l -> isFibonacciSequence (List.map Tuple.first l))
-                                            5
-                                            row
-                                    )
-                                    grid
-                           )
-              }
+            ( { model | grid = incrementCells model.grid ( x, y ) |> lightUpFibonacciSequences }
             , Task.perform TimeUpdate Time.now
             )
 
