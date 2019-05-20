@@ -19,6 +19,10 @@ suite =
         , describe "fibonacciIndex"
             [ test "returns 8 for fibonacci number 21" <|
                 \_ -> fibonacciIndex 21 |> Expect.equal 8
+            , test "returns 0 for fibonacci number 0" <|
+                \_ -> fibonacciIndex 0 |> Expect.equal 0
+            , test "returns 2 for fibonacci number 1" <|
+                \_ -> fibonacciIndex 1 |> Expect.equal 2
             ]
         , describe "isNextFibonacci"
             [ test "returns True for two consecutive fibonacci numbers 5 and 8" <|

@@ -33,6 +33,11 @@ fibonacciIndex x =
         phi =
             1.61803399
     in
+    case x of
+        0 ->
+            0
+
+        _ ->
     round ((logBase e (toFloat x) + (logBase e 5 / 2)) / logBase e phi)
 
 
