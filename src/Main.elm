@@ -170,41 +170,43 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    table []
-        (List.indexedMap
-            (\rowIndex row ->
-                tr []
-                    (List.indexedMap
-                        (\colIndex ( cell, flag ) ->
-                            td
-                                [ onClick (CellClick ( colIndex, rowIndex ))
-                                , class "cell"
-                                , class
-                                    (if flag == LightUpYellow then
-                                        "light-up-yellow"
+    div [ class "container" ]
+        [ table []
+            (List.indexedMap
+                (\rowIndex row ->
+                    tr []
+                        (List.indexedMap
+                            (\colIndex ( cell, flag ) ->
+                                td
+                                    [ onClick (CellClick ( colIndex, rowIndex ))
+                                    , class "cell"
+                                    , class
+                                        (if flag == LightUpYellow then
+                                            "light-up-yellow"
 
-                                     else if flag == LightUpGreen then
-                                        "light-up-green"
+                                         else if flag == LightUpGreen then
+                                            "light-up-green"
 
-                                     else
-                                        ""
-                                    )
-                                ]
-                                [ text
-                                    (case cell + 1 of
-                                        0 ->
+                                         else
                                             ""
+                                        )
+                                    ]
+                                    [ text
+                                        (case cell + 1 of
+                                            0 ->
+                                                ""
 
-                                        _ ->
-                                            String.fromInt cell
-                                    )
-                                ]
+                                            _ ->
+                                                String.fromInt cell
+                                        )
+                                    ]
+                            )
+                            row
                         )
-                        row
-                    )
+                )
+                model.grid
             )
-            model.grid
-        )
+        ]
 
 
 subscriptions : Model -> Sub Msg

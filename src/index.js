@@ -1,3 +1,4 @@
+import './normalize.css'
 import './main.css'
 import { Elm } from './Main.elm'
 import registerServiceWorker from './registerServiceWorker'
