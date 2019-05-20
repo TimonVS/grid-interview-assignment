@@ -133,18 +133,18 @@ update msg model =
                                 List.map
                                     (\row ->
                                         mapSequence
-                                            (\a isPartOfFibSequence ->
-                                                ( a
+                                            (\( value, flag ) isPartOfFibSequence ->
+                                                ( value
                                                 , if isPartOfFibSequence then
                                                     LightUpGreen
 
                                                   else
-                                                    None
+                                                    flag
                                                 )
                                             )
-                                            isFibonacciSequence
+                                            (\l -> isFibonacciSequence (List.map Tuple.first l))
                                             5
-                                            (List.map Tuple.first row)
+                                            row
                                     )
                                     grid
                            )
