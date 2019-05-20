@@ -58,24 +58,25 @@ view model =
                 (\rowIndex row ->
                     tr []
                         (List.indexedMap
-                            (\colIndex ( cell, flag ) ->
+                            (\colIndex ( value, flag ) ->
                                 td
                                     [ onClick (CellClick ( colIndex, rowIndex ))
                                     , class "cell"
                                     , class
-                                        (if flag == LightUpYellow then
-                                            "light-up-yellow"
+                                        (case flag of
+                                            LightUpYellow ->
+                                                "light-up-yellow"
 
-                                         else if flag == LightUpGreen then
-                                            "light-up-green"
+                                            LightUpGreen ->
+                                                "light-up-green"
 
-                                         else
-                                            ""
+                                            _ ->
+                                                ""
                                         )
                                     ]
                                     [ text
                                         (if value == -1 then
-                                                ""
+                                            ""
 
                                          else
                                             String.fromInt value
