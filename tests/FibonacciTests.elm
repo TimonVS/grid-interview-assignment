@@ -1,7 +1,7 @@
 module FibonacciTests exposing (suite)
 
 import Expect
-import Fibonacci exposing (fibonacciIndex, isFibonacci, isNextFibonacci)
+import Fibonacci exposing (fibonacciIndex, isFibonacci, isFibonacciSequence, isNextFibonacci)
 import Test exposing (..)
 
 
@@ -15,6 +15,9 @@ suite =
             , test "returns True for fibonacci number 5" <|
                 \_ ->
                     isFibonacci 5 |> Expect.equal True
+            , test "returns True for fibonacci number 0" <|
+                \_ ->
+                    isFibonacci 0 |> Expect.equal True
             ]
         , describe "fibonacciIndex"
             [ test "returns 8 for fibonacci number 21" <|
@@ -33,5 +36,11 @@ suite =
                 \_ -> isNextFibonacci 0 1 |> Expect.equal True
             , test "returns False for two non-consecutive fibonacci numbers 5 and 6" <|
                 \_ -> isNextFibonacci 5 6 |> Expect.equal False
+            ]
+        , describe "isFibonacciSequence"
+            [ test "returns True for consecutive fibonacci sequence" <|
+                \_ -> isFibonacciSequence [ 0, 1, 2, 3, 5, 8 ] |> Expect.equal True
+            , test "return False for an empty list" <|
+                \_ -> isFibonacciSequence [] |> Expect.equal False
             ]
         ]
