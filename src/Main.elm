@@ -104,18 +104,18 @@ type Msg
 incrementCells : Grid -> Point -> Grid
 incrementCells matrix ( x, y ) =
     mapCells
-        (\( cellValue, _ ) ( colIndex, rowIndex ) ->
-            if ( colIndex, rowIndex ) == ( x, y ) && cellValue == -1 then
+        (\( value, _ ) ( colIndex, rowIndex ) ->
+            if ( colIndex, rowIndex ) == ( x, y ) && value == -1 then
                 ( 1, LightUpYellow )
 
-            else if cellValue == -1 then
-                ( cellValue, None )
+            else if value == -1 then
+                ( value, None )
 
             else if colIndex == x || rowIndex == y then
-                ( cellValue + 1, LightUpYellow )
+                ( value + 1, LightUpYellow )
 
             else
-                ( cellValue, None )
+                ( value, None )
         )
         matrix
 
