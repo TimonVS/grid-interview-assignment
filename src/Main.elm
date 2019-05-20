@@ -74,12 +74,11 @@ view model =
                                         )
                                     ]
                                     [ text
-                                        (case cell + 1 of
-                                            0 ->
+                                        (if value == -1 then
                                                 ""
 
-                                            _ ->
-                                                String.fromInt cell
+                                         else
+                                            String.fromInt value
                                         )
                                     ]
                             )
