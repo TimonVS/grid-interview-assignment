@@ -54,9 +54,9 @@ td {
 }
 
 .cell.light-up-yellow {
-  background-color: yellow;
+  background-color: rgb(245, 245, 94);
 }
 
 .cell.light-up-green {
-  background-color: green;
+  background-color: rgb(60, 180, 60);
 }
