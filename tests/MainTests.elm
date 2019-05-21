@@ -3,6 +3,7 @@ module MainTests exposing (suite)
 import Expect
 import Main exposing (Flag(..), incrementCells)
 import Matrix
+import Maybe
 import Test exposing (..)
 
 
@@ -14,25 +15,26 @@ suite =
                 \_ ->
                     let
                         grid =
-                            Matrix.createMatrix 3 3 ( -1, None )
+                            Matrix.createMatrix 3 3 ( Nothing, None )
                     in
-                    incrementCells grid ( 0, 0 )
+                    incrementCells ( 0, 0 ) grid
                         |> Expect.equal
-                            [ [ ( 1, LightUpYellow ), ( -1, None ), ( -1, None ) ]
-                            , [ ( -1, None ), ( -1, None ), ( -1, None ) ]
-                            , [ ( -1, None ), ( -1, None ), ( -1, None ) ]
+                            [ [ ( Just 1, LightUpYellow ), ( Nothing, None ), ( Nothing, None ) ]
+                            , [ ( Nothing, None ), ( Nothing, None ), ( Nothing, None ) ]
+                            , [ ( Nothing, None ), ( Nothing, None ), ( Nothing, None ) ]
                             ]
-            , test "increments and lights up cell on position (1, 1)" <|
+            , test "increments cells in column" <|
                 \_ ->
                     let
                         grid =
-                            Matrix.createMatrix 3 3 ( -1, None )
+                            Matrix.createMatrix 3 3 ( Nothing, None )
                     in
-                    incrementCells grid ( 1, 1 )
+                    incrementCells ( 1, 1 ) grid
+                        |> incrementCells ( 1, 0 )
                         |> Expect.equal
-                            [ [ ( -1, None ), ( -1, None ), ( -1, None ) ]
-                            , [ ( -1, None ), ( 1, LightUpYellow ), ( -1, None ) ]
-                            , [ ( -1, None ), ( -1, None ), ( -1, None ) ]
+                            [ [ ( Nothing, None ), ( Just 1, LightUpYellow ), ( Nothing, None ) ]
+                            , [ ( Nothing, None ), ( Just 2, LightUpYellow ), ( Nothing, None ) ]
+                            , [ ( Nothing, None ), ( Nothing, None ), ( Nothing, None ) ]
                             ]
             ]
         ]

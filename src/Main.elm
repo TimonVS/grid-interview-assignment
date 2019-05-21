@@ -18,7 +18,7 @@ type alias Grid =
 
 
 type alias CellValue =
-    Int
+    Maybe Int
 
 
 type Flag
@@ -43,7 +43,7 @@ type alias Model =
 
 init : () -> ( Model, Cmd msg )
 init _ =
-    ( Model (Matrix.createMatrix 50 50 ( -1, None )) (Time.millisToPosix 0), Cmd.none )
+    ( Model (Matrix.createMatrix 50 50 ( Nothing, None )) (Time.millisToPosix 0), Cmd.none )
 
 
 
@@ -75,11 +75,12 @@ view model =
                                         )
                                     ]
                                     [ text
-                                        (if value == -1 then
-                                            ""
+                                        (case value of
+                                            Just x ->
+                                                String.fromInt x
 
-                                         else
-                                            String.fromInt value
+                                            _ ->
+                                                ""
                                         )
                                     ]
                             )
@@ -101,21 +102,24 @@ type Msg
     | ResetFlags Time.Posix
 
 
-incrementCells : Grid -> Point -> Grid
-incrementCells matrix ( x, y ) =
+incrementCells : Point -> Grid -> Grid
+incrementCells ( x, y ) matrix =
     mapCells
-        (\( value, _ ) ( colIndex, rowIndex ) ->
-            if ( colIndex, rowIndex ) == ( x, y ) && value == -1 then
-                ( 1, LightUpYellow )
+        (\cell ( colIndex, rowIndex ) ->
+            case cell of
+                ( Just value, _ ) ->
+                    if colIndex == x || rowIndex == y then
+                        ( Just (value + 1), LightUpYellow )
 
-            else if value == -1 then
-                ( value, None )
+                    else
+                        ( Just value, None )
 
-            else if colIndex == x || rowIndex == y then
-                ( value + 1, LightUpYellow )
+                _ ->
+                    if ( colIndex, rowIndex ) == ( x, y ) then
+                        ( Just 1, LightUpYellow )
 
-            else
-                ( value, None )
+                    else
+                        ( Nothing, None )
         )
         matrix
 
@@ -134,7 +138,7 @@ lightUpFibonacciSequences grid =
                         flag
                     )
                 )
-                (\l -> isFibonacciSequence (List.map Tuple.first l))
+                (\l -> isFibonacciSequence (List.map (\x -> Tuple.first x |> Maybe.withDefault -1) l))
                 5
                 row
         )
@@ -147,7 +151,7 @@ resetFlags matrix =
         (\( value, flag ) _ ->
             case ( value, flag ) of
                 ( _, LightUpGreen ) ->
-                    ( -1, None )
+                    ( Nothing, None )
 
                 _ ->
                     ( value, None )
@@ -159,7 +163,7 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         CellClick ( x, y ) ->
-            ( { model | grid = incrementCells model.grid ( x, y ) |> lightUpFibonacciSequences }
+            ( { model | grid = incrementCells ( x, y ) model.grid |> lightUpFibonacciSequences }
             , Task.perform TimeLastClickedUpdate Time.now
             )
 
