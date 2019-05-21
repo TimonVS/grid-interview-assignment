@@ -13,16 +13,23 @@
   --cell-size: 18px;
   --cell-border-size: 1px;
   --cell-count: 50;
+  --bg-color: #fff;
+  --text-color: #333;
+  --border-color: #333;
 }
 
 body {
   font-family: monospace;
   font-size: 12px;
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
 
 .container {
   margin: 12px auto;
-  max-width: calc(var(--cell-count) * (var(--cell-size) + var(--cell-border-size)));
+  max-width: calc(
+    var(--cell-count) * (var(--cell-size) + var(--cell-border-size))
+  );
 }
 
 table {
@@ -40,7 +47,7 @@ tr {
 
 td {
   font-weight: 600;
-  border: var(--cell-border-size) solid #333;
+  border: var(--cell-border-size) solid var(--border-color);
   width: var(--cell-size);
   height: var(--cell-size);
   padding: 0;
@@ -48,7 +55,7 @@ td {
   text-align: center;
   vertical-align: middle;
   cursor: pointer;
-  background-color: #fff;
+  background-color: var(--bg-color);
   transition: background-color 0.3s;
   white-space: nowrap;
 }
