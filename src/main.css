@@ -13,9 +13,9 @@
   --cell-size: 18px;
   --cell-border-size: 1px;
   --cell-count: 50;
-  --bg-color: #fff;
-  --text-color: #333;
-  --border-color: #333;
+  --bg-color: rgb(28, 28, 28);
+  --text-color: #fff;
+  --border-color: rgba(255, 255, 255, 0.4);
 }
 
 body {
@@ -61,9 +61,9 @@ td {
 }
 
 .cell.light-up-yellow {
-  background-color: rgb(245, 245, 94);
+  background-color: hsl(60, 100%, 27%);
 }
 
 .cell.light-up-green {
-  background-color: rgb(60, 180, 60);
+  background-color: hsl(135, 53%, 22%);
 }
