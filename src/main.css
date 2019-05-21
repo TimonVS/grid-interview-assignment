@@ -10,12 +10,17 @@
 }
 
 :root {
-  --cell-size: 18px;
+  --cell-size: 16px;
   --cell-border-size: 1px;
   --cell-count: 50;
   --bg-color: rgb(28, 28, 28);
   --text-color: #fff;
   --border-color: rgba(255, 255, 255, 0.4);
+}
+
+html,
+body {
+  height: 100%;
 }
 
 body {
@@ -26,10 +31,14 @@ body {
 }
 
 .container {
-  margin: 12px auto;
+  height: inherit;
+  margin: auto;
   max-width: calc(
     var(--cell-count) * (var(--cell-size) + var(--cell-border-size))
   );
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 table {
