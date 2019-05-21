@@ -11,7 +11,7 @@ type alias Point =
 
 createMatrix : Int -> Int -> a -> Matrix a
 createMatrix width height initialValue =
-    List.repeat 50 (List.repeat 50 initialValue)
+    List.repeat height (List.repeat width initialValue)
 
 
 mapCells : (a -> Point -> a) -> Matrix a -> Matrix a
