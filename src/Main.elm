@@ -1,4 +1,4 @@
-module Main exposing (Msg(..), main, update, view)
+module Main exposing (Flag(..), Msg(..), incrementCells, main, update, view)
 
 import Browser
 import Fibonacci exposing (isFibonacci, isFibonacciSequence, isNextFibonacci)
