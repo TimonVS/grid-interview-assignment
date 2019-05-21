@@ -107,15 +107,15 @@ incrementCells ( x, y ) matrix =
     mapCells
         (\cell ( colIndex, rowIndex ) ->
             case cell of
-                ( Just value, _ ) ->
+                ( Just value, flag ) ->
                     if colIndex == x || rowIndex == y then
                         ( Just (value + 1), LightUpYellow )
 
                     else
-                        ( Just value, None )
+                        ( Just value, flag )
 
                 _ ->
-                    if ( colIndex, rowIndex ) == ( x, y ) then
+                    if colIndex == x || rowIndex == y then
                         ( Just 1, LightUpYellow )
 
                     else
