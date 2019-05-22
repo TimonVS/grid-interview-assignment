@@ -1,4 +1,4 @@
-module Matrix exposing (Matrix, Point, createMatrix, mapCells)
+module Matrix exposing (Matrix, Point, mapCells, repeat)
 
 
 type alias Matrix a =
@@ -9,8 +9,8 @@ type alias Point =
     ( Int, Int )
 
 
-createMatrix : Int -> Int -> a -> Matrix a
-createMatrix width height initialValue =
+repeat : Int -> Int -> a -> Matrix a
+repeat width height initialValue =
     List.repeat height (List.repeat width initialValue)
 
 

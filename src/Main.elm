@@ -43,7 +43,7 @@ type alias Model =
 
 init : () -> ( Model, Cmd msg )
 init _ =
-    ( Model (Matrix.createMatrix 50 50 ( Nothing, None )) (Time.millisToPosix 0), Cmd.none )
+    ( Model (Matrix.repeat 50 50 ( Nothing, None )) (Time.millisToPosix 0), Cmd.none )
 
 
 
