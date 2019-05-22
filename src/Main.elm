@@ -5,7 +5,7 @@ import Fibonacci exposing (isFibonacci, isFibonacciSequence, isNextFibonacci)
 import Html exposing (Html, button, div, table, td, text, tr)
 import Html.Attributes exposing (class, style)
 import Html.Events exposing (onClick)
-import Matrix exposing (Matrix, Point, mapCells)
+import Matrix exposing (Matrix, Point)
 import Maybe
 import Task
 import Time
@@ -104,7 +104,7 @@ type Msg
 
 incrementCells : Point -> Grid -> Grid
 incrementCells ( x, y ) matrix =
-    mapCells
+    Matrix.map
         (\cell ( colIndex, rowIndex ) ->
             case cell of
                 ( Just value, flag ) ->
@@ -147,7 +147,7 @@ lightUpFibonacciSequences grid =
 
 resetFlags : Grid -> Grid
 resetFlags matrix =
-    mapCells
+    Matrix.map
         (\( value, flag ) _ ->
             case ( value, flag ) of
                 ( _, LightUpGreen ) ->
