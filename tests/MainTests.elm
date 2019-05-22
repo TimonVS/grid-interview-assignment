@@ -15,7 +15,7 @@ suite =
                 \_ ->
                     let
                         grid =
-                            Matrix.createMatrix 3 3 ( Nothing, None )
+                            Matrix.repeat 3 3 ( Nothing, None )
                     in
                     incrementCells ( 0, 0 ) grid
                         |> Expect.equal
@@ -27,7 +27,7 @@ suite =
                 \_ ->
                     let
                         grid =
-                            Matrix.createMatrix 3 3 ( Nothing, None )
+                            Matrix.repeat 3 3 ( Nothing, None )
                     in
                     incrementCells ( 0, 0 ) grid
                         |> incrementCells ( 1, 1 )

@@ -1,4 +1,4 @@
-module Matrix exposing (Matrix, Point, createMatrix, mapCells)
+module Matrix exposing (Matrix, Point, map, repeat)
 
 
 type alias Matrix a =
@@ -9,13 +9,13 @@ type alias Point =
     ( Int, Int )
 
 
-createMatrix : Int -> Int -> a -> Matrix a
-createMatrix width height initialValue =
+repeat : Int -> Int -> a -> Matrix a
+repeat width height initialValue =
     List.repeat height (List.repeat width initialValue)
 
 
-mapCells : (a -> Point -> a) -> Matrix a -> Matrix a
-mapCells fn matrix =
+map : (a -> Point -> a) -> Matrix a -> Matrix a
+map fn m =
     List.indexedMap
         (\rowIndex row ->
             List.indexedMap
@@ -24,4 +24,4 @@ mapCells fn matrix =
                 )
                 row
         )
-        matrix
+        m
