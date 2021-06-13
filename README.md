@@ -1,10 +1,6 @@
-# Q42 interview assignment
+# Grid interview assignment
 
-This project was created as part of the interview process with Q42. The chosen language for the assignment is Elm and the project was bootstrapped with [Create Elm App](https://github.com/halfzebra/create-elm-app).
-
-## Assignment description (in Dutch)
-
-> Maak een 50x50 grid. Als je klikt op een cel wordt bij alle cellen in de rij en kolom van de cel 1 opgeteld. Was een cel leeg dan wordt die op 1 gezet. Na elke verandering licht een cel kort geel op. Als 5 elkaar in de Fibonacci-reeks opvolgende getallen naast elkaar staan, lichten deze cellen kort groen op en worden ze leeg gemaakt. Gebruik de programmeertaal die je het beste vindt passen.
+This project was created as part of an interview process. The chosen language for the assignment is Elm and the project was bootstrapped with [Create Elm App](https://github.com/halfzebra/create-elm-app).
 
 ## Setup
 
